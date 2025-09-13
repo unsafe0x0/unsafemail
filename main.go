@@ -17,9 +17,6 @@ func init() {
 		log.Println("No .env file found, using system environment")
 	}
 	corsOrigin = os.Getenv("CORS_ORIGIN")
-	if corsOrigin == "" {
-		corsOrigin = "*"
-	}
 }
 
 func loggingMiddleware(next http.Handler) http.Handler {
