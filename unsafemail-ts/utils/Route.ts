@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { Router } from "express";
-import { sendEmail } from "./Mailer";
+import { sendEmail } from "./Mailer.js";
 
 const mailer = Router();
 

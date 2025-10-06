@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
-import mailer from "./utils/Route";
+import mailer from "./utils/Route.js";
 
 const app = express();
 
@@ -16,6 +16,10 @@ app.use(
 app.use(helmet());
 
 const PORT = process.env.PORT || 3000;
+
+app.use("/", (req, res) => {
+  res.send("Unsafemail TS is running");
+});
 
 app.use("/api", mailer);
 
