@@ -1,4 +1,4 @@
-# Unsafemail
+# Unsafemail (Go Project)
 
 A tiny Go HTTP service that exposes a single endpoint to send an email using SMTP.
 
@@ -15,8 +15,10 @@ This project is intentionally minimal and demonstrates how to wire a small HTTP 
 
 ## Contract
 
-- Input: POST /send-email with JSON body: `{ "to": "recipient@example.com", "subject": "...", "body": "..." }`
+- Input: POST /send-email with JSON body: `{ "to": "recipient@example.com", "subject": "...", "body": "<b>HTML content here</b>" }`
+	- The `body` field should contain the HTML content you want to send in the email. It will be sent as HTML (MIME type `text/html`).
 - Output: 200 OK with body `Email sent successfully` on success. Appropriate HTTP error codes on failure.
+	- The response is always HTTP 200 with a plain text message on success.
 - Error modes: malformed JSON -> 400; non-POST -> 405; SMTP failure -> 500.
 
 ## Environment and configuration
@@ -42,17 +44,18 @@ go run main.go
 
 The server listens on `:8080` and exposes the `POST /send-email` endpoint. `config.Init()` is executed on startup and will log an error and exit if required environment values are missing.
 
+
 ## Example request
 
-Use curl to send an example request to the running server:
+Use curl to send an example request to the running server (with HTML body):
 
 ```bash
 curl -X POST http://localhost:8080/send-email \
 	-H "Content-Type: application/json" \
-	-d '{"to":"recipient@example.com","subject":"Hello","body":"This is a test."}'
+	-d '{"to":"recipient@example.com","subject":"Hello","body":"<b>This is a test.</b>"}'
 ```
 
-If successful you should receive `Email sent successfully` as the response body.
+If successful you should receive `Email sent successfully` as the response body (HTTP 200).
 
 
 ## License
